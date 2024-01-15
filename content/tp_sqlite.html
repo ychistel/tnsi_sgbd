@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+
+
+<html lang="fr" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TP : SGBD SQLite &#8212; NSI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bbc778b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../_static/documentation_options.js?v=72dce1d2"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=d99ca74e"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/tp_sqlite';</script>
+    <script src="../_static/custom.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="Système de gestion de base de données" href="cours.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Passer au contenu principal</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Haut de page
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">NSI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Recherche</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cours.html">Système de gestion de base de données</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TP : SGBD SQLite</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/tp_sqlite.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="clair/sombre" aria-label="clair/sombre" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TP : SGBD SQLite</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tp-sgbd-sqlite">
+<h1>TP : SGBD SQLite<a class="headerlink" href="#tp-sgbd-sqlite" title="Link to this heading">#</a></h1>
+<p>SQLite est un ensemble de programmes qui permet de gérer des bases de données. Ces programmes sont à la fois serveur et client. Il est possible d’uitliser la ligne de commandes pour créer et gérer ses tables mais il existe aussi une interface graphique téléchargeable : SQLite Browser.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SQLite Browser peut être installé sur sa machine ou alors utilisé sur une clé USB grace à sa version portable.</p>
+</div>
+<p>On va créer une base de données selon le modèle relationnel vu dans la première partie du cours. On redonne le schéma relationnel de notre base de donnée.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/schema_relationnel_romans.png"><img alt="../_images/schema_relationnel_romans.png" src="../_images/schema_relationnel_romans.png" style="width: 420px;" /></a>
+</figure>
+<ol class="arabic">
+<li><p>Installer sur votre clé usb le fichier SQLite Browser téléchargeable sur l’ENT ou directement depuis le site de SQLite.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si vous n’avez pas de clé usb, il faut installer SQLite Browser dans le dossier <cite>C:\temp</cite> de votre machine.</p>
+</div>
+</li>
+<li><p>Ouvrir l’application <cite>SQLite Browser</cite> et créer une nouvelle base de données <code class="docutils literal notranslate"><span class="pre">romans</span></code>.</p></li>
+<li><p>Créer une première table nommée <code class="docutils literal notranslate"><span class="pre">livre</span></code> avec les attributs <code class="docutils literal notranslate"><span class="pre">titre</span></code> de type texte et <code class="docutils literal notranslate"><span class="pre">publication</span></code> de type entier associé à l’année de publication du roman. Ajouter l’attibut <code class="docutils literal notranslate"><span class="pre">id_livre</span></code> qui est une clé primaire auto-incrémentée.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/bdd_romans_table_livre.png"><img alt="../_images/bdd_romans_table_livre.png" src="../_images/bdd_romans_table_livre.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-text">création de la table livre</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</li>
+<li><p>Créer de la même façon les tables <code class="docutils literal notranslate"><span class="pre">auteur</span></code>, <code class="docutils literal notranslate"><span class="pre">langue</span></code> et <code class="docutils literal notranslate"><span class="pre">genre</span></code> avec leurs attributs respectifs.</p></li>
+<li><p>Il faut lier les tables <code class="docutils literal notranslate"><span class="pre">livre</span></code> et <code class="docutils literal notranslate"><span class="pre">auteur</span></code> entre elles avec la clé étrangère <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code>. Il faut donc ajouter la clé primaire <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code> de la table auteur en clé étrangère à la table <code class="docutils literal notranslate"><span class="pre">livre</span></code>. Cette clé étrangère est aussi nommée <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code>.</p>
+<p>L’ajout de la clé étrangère <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code> se fait en 2 temps.</p>
+<ol class="loweralpha simple">
+<li><p>Sélectionner la table <code class="docutils literal notranslate"><span class="pre">livre</span></code> puis cliquer sur le bouton <code class="docutils literal notranslate"><span class="pre">Modifier</span> <span class="pre">table</span></code> puis ajouter un nouvel attribut <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code>.</p></li>
+</ol>
+<p>En fin de ligne, il faut compléter le champ <code class="docutils literal notranslate"><span class="pre">clé</span> <span class="pre">étrangère</span></code> en selectionnant la table référenceé et la clé primaire utilisée. Ici, on sélectionne la table <code class="docutils literal notranslate"><span class="pre">auteur</span></code> et la clé primaire <code class="docutils literal notranslate"><span class="pre">id_auteur</span></code>.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/cle_etrangere_1.png"><img alt="../_images/cle_etrangere_1.png" src="../_images/cle_etrangere_1.png" style="width: 560px;" /></a>
+</figure>
+<ol class="loweralpha simple" start="2">
+<li><p>Sélectionner l’onglet <code class="docutils literal notranslate"><span class="pre">Contraintes</span></code> et cliquer sur <code class="docutils literal notranslate"><span class="pre">Ajouter</span> <span class="pre">une</span> <span class="pre">contrainte</span></code> en sélectionnant la valeur <code class="docutils literal notranslate"><span class="pre">clé</span> <span class="pre">étrangère</span></code>. Ensuite, ajouter le nom de la clé dans le champ <code class="docutils literal notranslate"><span class="pre">colonne</span></code>. Enregistrer les modifications.</p></li>
+</ol>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/cle_etrangere_2.png"><img alt="../_images/cle_etrangere_2.png" src="../_images/cle_etrangere_2.png" style="width: 560px;" /></a>
+</figure>
+</li>
+<li><p>Ajouter les autres clés étrangères de la table <code class="docutils literal notranslate"><span class="pre">livre</span></code>.</p></li>
+<li><p>Pour lier la <code class="docutils literal notranslate"><span class="pre">table</span></code> livre et la table <code class="docutils literal notranslate"><span class="pre">genre</span></code>, il faut créer la table <code class="docutils literal notranslate"><span class="pre">livre_par_genre</span></code>.</p>
+<ol class="loweralpha simple">
+<li><p>Créer la table <code class="docutils literal notranslate"><span class="pre">livre_par_genre</span></code> en ajoutant les 2 attributs <code class="docutils literal notranslate"><span class="pre">id_livre</span></code> et <code class="docutils literal notranslate"><span class="pre">id_genre</span></code>.</p></li>
+<li><p>Ajouter le couple <code class="docutils literal notranslate"><span class="pre">(id_livre,id_genre)</span></code> comme clé primaire de la table.</p></li>
+<li><p>Déclarer comme clés étrangères les 2 clés <code class="docutils literal notranslate"><span class="pre">id_livre</span></code> et <code class="docutils literal notranslate"><span class="pre">id_genre</span></code> en référençant les tables.</p></li>
+</ol>
+</li>
+</ol>
+<p>Les tables sont construites. Il faut maintenant les alimenter. L’interface graphique permet de compléter assez facilement les données. Les bases de données relationnel utilisent leur propre langage pour effectuer des requêtes et des actions sur les bases de données. C’est le langage SQL.</p>
+<p class="rubric">Insérer de nouvelles valeurs</p>
+<p>On insère des valeurs dans une table avec l’instruction SQL suivante:</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">`</span><span class="k">table</span><span class="w"> </span><span class="p">(</span><span class="n">attribut_1</span><span class="p">,</span><span class="w"> </span><span class="p">...,</span><span class="w"> </span><span class="n">atribut_n</span><span class="p">)</span><span class="o">`</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">valeur_1</span><span class="p">,</span><span class="w"> </span><span class="p">...,</span><span class="w"> </span><span class="n">valeur_n</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Prudence</p>
+<ul class="simple">
+<li><p>Il est possible de ne pas préciser les attributs mais les valeurs doivent être dans le même ordre que les attributs de la table.</p></li>
+<li><p>Si on précise les attributs, on peut changer l’ordre !</p></li>
+</ul>
+</div>
+<p class="rubric">Mettre à jour (modifier) des enregistrements</p>
+<p>On modifie des valeurs dans une table avec l’instruction SQL suivante:</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">attribut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;nouvelle valeur&quot;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">attribut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;ancienne valeur&quot;</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Prudence</p>
+<ul class="simple">
+<li><p>Si on ne précise pas l’ancienne valeur de l’attribut avec la clause <cite>WHERE</cite>, tous les enregistrements de la table sont modifiés.</p></li>
+</ul>
+</div>
+<ol class="arabic simple">
+<li><p>Compléter les tables en utilisant les romans de l’activité sur le modèle relationnel.</p></li>
+<li><p>On souhaite ajouter l’auteure Joanne Rowling née en 1965.
+a)  Insérer cet enregistrement avec une requête SQL .
+b)  Vérifier que l’enregistrement est dans la table auteur.</p></li>
+<li><p>Ajouter le roman « Harry Potter à l’école des sorciers » édité en 1998 en anglais avec une requête SQL.</p></li>
+<li><p>Écrire une requête SQL qui modifie le titre du roman « Blade runner » par le titre original.</p></li>
+</ol>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cours.html"
+       title="page précédente">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Système de gestion de base de données</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Yannick Chistel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023,Yannick Chistel.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
