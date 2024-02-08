@@ -1,40 +1,87 @@
 Système de gestion de base de données
 =====================================
 
-Après avoir défini un modèle relationnel pour gérer des données, il faut le mettre en place. Bien entendu, il est toujours possible de recourir à la programmation et gérer ses données dans différents fichiers. Différents problèmes risquent de se présenter:
+Le rôle d'un SGBD
+-----------------
 
--   Déjà l'écriture du programme pour effectuer des requêtes sur les données;
--   Ensuite, l'accès aux données et surtout l'écriture des données dans les fichiers représentant les relations. 
--   Quels utilisateurs peuvent avoir accès aux données ? Quels droits : écriture, lecture ?
--   Il faut également gérer les accès concurrents, c'est à dire un accès simultanné à des données de la base;
--   Penser à une interface de gestion pour gérer sa base.
+**SGBD** est l'acronyme de **S**\ ystème de **G**\ estion de **B**\ ase de **D**\ onnées.
 
-Le rôle d'un SGBD est justement de gérer tous ces problèmes. Un SGBD est un ensemble de programmes qui permet de gérer des bases de données. Il propose également pour acéder et modifier les données de la base un langage de requêtes avec une syntaxe précise.
+Un SGBD est un logiciel qui permet de créer et gérer des bases de données accessibles à un ou plusieurs utilisateurs.
 
-Un SGBD doit permettre:
+Le langage utilisé dans les SGBD est le **SQL**, acronyme de **S**\ tructured **Q**\ uery **L**\ anguage.
 
--   de créer et gérer les utilisateurs;
--   de créer et gérer des bases de données relationnelles;
--   de définir les permissions d'accès en écriture et en lecture des différentes bases de données;
--   de proposer un langage permettant d'effectuer des requêtes sur les données : langage SQL
--   de proposer une interface de gestion des utilisateurs et des bases de données.
+Les fonctionnalités d'un SGBD sont:
 
-Une caractéristique importante des SGBD est la vérification de la cohérence des données dans les tables d'une base de données. Un modèle relationnel bien construit va imposer des contraintes d'intégrité que le SGBD doit pouvoir vérifier. Parmi ces contraintes d'intégrité, un SGBD doit:
+-  créer des bases de données, ensemble de relations (tables);
+-  créer des relations (tables) à partir d'un schéma relationnel;
+-  ajouter, modifier, supprimer des données dans les relations (tables);
+-  effectuer des requêtes pour interroger les relations, obtenir des données, triées ou non, respectant une ou plusieurs conditions;
+-  spécifier les contraintes d'intégrités : clés primaires, clés étrangères, domaine de valeurs;
+-  sécuriser et pérenniser les données ;
+-  gérer les droits, permissions, des utilisateurs de la base de données.
 
--   vérifier l'unicité d'une clé primaire, l'auto incrémenter pour éviter tout doublon.
--   vérifier la cohérence d'une clé étrangère en contrôlant par exemple l'existence de la clé primaire de la relation référencée.
--   contrôler la cohérence des données, leur appartenance à un domaine que l'on précise pour chaque attribut.
--   contrôler qu'un attribut d'un tuple de données n'est pas vide s'il est ainsi construit.
+Contraintes d'intégrité
+-----------------------
 
-La plupart des SGBD sont construits sur le modèle **client / serveur**. 
+Une caractéristique importante des SGBD est la vérification de la cohérence des données dans les tables d'une base de données. Un modèle relationnel bien construit va imposer des contraintes d'intégrité que le SGBD doit pouvoir vérifier. On redonne quelques contraintes d'intégrité qu'un SGBD doit vérifier pour assurer la cohérence des données d'une base de données.
 
--   Côté serveur, on a les programmes qui permettent de construire et gérer les bases de données et les utilisateurs. Les données des bases sont enregistrées dans des fichiers. L'organisation de ces fichiers permet un accès rapide aux données. Le SGBD gère les accès aux fichiers selon les permissions des utilisateurs et gère aussi les accès concurrent.
--   Côté client, un programme permet à un utilisateur authentifié d'accéder et de gérer ses bases de données. Ce programme peut être en ligne de commandes dans un terminal ou avec une interface graphique pour les SGBD les plus évolués. Certains SGBD propose une interface web pour gérer les bases de données après authentification.
+.. rubric:: Contrainte d'intégrité de relation
 
-Il existe de nombreux SGBD. Certains sont libres comme **MySQL**, **PostgreSQL** et **SQLite** et d'autres sont des logiciels propriétaires comme **Oracle database** et **Microsoft SQL Serveur**.
+Toute relation doit posséder une **clé primaire**. Cette clé primaire garantit l'unicité des enregistrements (p-uplet) dans la table.
 
-.. warning::
+Un attribut (ou plusieurs) est une clé primaire s'il est renseigné et de valeur unique dans la table.
+
+.. rubric:: Contrainte d'intégrité de référencement
+
+Les tables sont liées entre elles. Cette liaison est assurée par la présence d'une clé étrangère.
+
+Une **clé étrangère** est un attribut d'une table dont les valeurs sont celles d'une clé primaire d'une autre table.
+
+Un enregistrement (p-uplet) d'une table avec une clé étrangère respècte la contrainte d'intégrité si:
+
+- la clé étrangère est vide, sans valeur (pas de lien pour l'enregistrement);
+- la clé étrangère possède une valeur associée à la valeur d'une clé primaire de la table qu'elle référence.
+
+La contrainte d'intégrité est rompue si la clé étrangère contient une valeur qui n'existe pas comme clé primaire de la table qu'elle référence.
+
+.. rubric:: Contrainte d'intégrité de domaine
+
+Chaque attribut d'une relation est défini pour un domaine de valeurs. Par exemple, un attribut peut être de type **entier**. Toute valeur autre que nombre **entier** ne respecte pas la contrainte d'intégrité.
+
+Modèle client - serveur
+------------------------
+
+.. figure:: ../img/client_serveur.png
+    :align: center
+
+Un SGBD est un logiciel installé sur un serveur. Dans ce mode de fonctionnement, l'accès aux données à plusieurs utilisateurs est possible.
+
+Cela implique que le SGBD permette :
+
+-  de créer, supprimer des utilisateurs, gérer l'authentification (login, mot de passe) pour la connexion à une base de données;
+-  de gérer les permissions en lecture et écriture sur les relations de la base de données.
+-  de gérer les accès concurrents, c'est à dire autoriser la lecture et l'écriture des données à plusieurs utilisateurs en même temps.
+
+Il existe de nombreux SGBD que l'on peut classer en deux catégories : libre ou propriétaire.
+
+-  Parmi les logiciels libres : MySQL, PostgreSQL, MariaDB;
+-  Parmi les logiciels propriétaires : ORACLE et Microsoft SQL Server
+
+Modèle embarqué
+---------------
+
+**SQLITE** est un SGBD qui a la particularité de s'installer sur toute plateforme en mode dit embarqué ce qui signifie non serveur. Cela permet de gérer des bases de données sur une machine personnelle, très utile pour le développement.
+
+.. figure:: ../img/sqlite_browser.png
+    :align: center
+    :width: 100%
+
+.. _sqlite: https://sqlite.org/index.html
+.. _sqlitebrowser: https://sqlitebrowser.org/dl/
+
+.. note::
+
+    Le logiciel **SQLITE** peut se télécharger sur le web. Il existe 2 versions de sqlite pour windows:
     
-    L'installation de **MySQL** ou **PostgreSQL** nécessite d'avoir un serveur, ce qui implique d'installer des programmes sur sa machine pour créer un environnement type serveur. 
-    
-    Le SGBD **SQLite** ne nécessite pas de serveur. Il peut être utilisé directement sur sa machine. L'inconvénient est l'absence de gestion des utilisateurs.
+    -   Une version en ligne de commandes disponible sur le site `sqlite`_.
+    -   Une version avec interface de gestion disponible sur le site `sqlitebrowser`_.
